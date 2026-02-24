@@ -1,0 +1,42 @@
+GUIA PARA COLOCAR AS FOTOS REAIS NO SITE
+
+O site foi configurado para buscar as fotos dentro da pasta "assets" que deve ficar na raiz pública do projeto (pasta public/).
+
+ESTRUTURA DE PASTAS NECESSÁRIA:
+Crie as pastas exatamente com esses nomes e coloque as fotos dentro delas (arquivos .jpg ou .png):
+
+1. TOLDO CORTINA
+   Caminho: /assets/produtos/cortina/
+   - Foto Principal: main.jpg
+   - Galeria 1: 1.jpg
+   - Galeria 2: 2.jpg
+   - Galeria 3: 3.jpg
+
+2. TOLDO ARTICULADO
+   Caminho: /assets/produtos/articulado/
+   - Foto Principal: main.jpg
+   - Galeria: 1.jpg, 2.jpg...
+
+3. COBERTURA DE GARAGEM
+   Caminho: /assets/produtos/garagem/
+   - Foto Principal: main.jpg
+   - Galeria: 1.jpg, 2.jpg...
+
+4. TOLDO AUTOMÁTICO
+   Caminho: /assets/produtos/automatico/
+   - Foto Principal: main.jpg
+   - Galeria: 1.jpg...
+
+5. PERGOLADOS
+   Caminho: /assets/produtos/pergolado/
+   - Foto Principal: main.jpg
+   - Galeria: 1.jpg...
+
+6. TOLDOS FIXOS
+   Caminho: /assets/produtos/fixo/
+   - Foto Principal: main.jpg
+   - Galeria: 1.jpg...
+
+IMPORTANTE:
+Se o nome do arquivo for diferente (ex: "foto_da_obra.jpg"), você deve alterar o código no arquivo "components/Produtos.tsx" para bater com o nome do arquivo real.
+Recomendo renomear as fotos para "main.jpg", "1.jpg", "2.jpg" para facilitar.

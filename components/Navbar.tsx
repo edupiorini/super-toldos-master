@@ -1,0 +1,1 @@
+// Arquivo removido. Utilize components/Menu.tsx
