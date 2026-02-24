@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { ArrowRight, Info, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Produto } from '../tipos';
 
+const withBase = (src: string) =>
+  src.startsWith('/assets/') ? `${import.meta.env.BASE_URL}${src.slice(1)}` : src;
+
 // Configuração dos Produtos com caminhos locais
 // O desenvolvedor deve colocar as imagens na pasta public/assets/produtos/[id]/
 const PRODUTOS: Produto[] = [
@@ -261,7 +264,7 @@ const Produtos: React.FC = () => {
                   <ImageIcon size={48} />
                 </div>
                 <img
-                  src={produto.image}
+                  src={withBase(produto.image)}
                   alt={produto.title}
                   onError={(e) => {
                     // Fallback se a imagem não existir
@@ -299,7 +302,7 @@ const Produtos: React.FC = () => {
               {/* Imagem Principal Ativa */}
               <div className="flex-grow relative h-64 md:h-auto bg-gray-900 flex items-center justify-center overflow-hidden group/image">
                 <img
-                  src={imagemAtiva}
+                  src={withBase(imagemAtiva)}
                   alt={produtoSelecionado.title}
                   onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/800x600/333/999?text=Foto+Principal'; }}
                   className="w-full h-full object-contain md:object-cover"
@@ -341,7 +344,7 @@ const Produtos: React.FC = () => {
                   onClick={() => trocarImagem(produtoSelecionado.image)}
                   className={`flex-shrink-0 w-24 h-24 md:w-20 md:h-20 rounded border-2 overflow-hidden transition-all ${imagemAtiva === produtoSelecionado.image ? 'border-brand-red opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
                 >
-                  <img src={produtoSelecionado.image} className="w-full h-full object-cover" alt="Principal" />
+                  <img src={withBase(produtoSelecionado.image)} className="w-full h-full object-cover" alt="Principal" />
                 </button>
 
                 {/* Miniaturas da Galeria */}
@@ -352,7 +355,7 @@ const Produtos: React.FC = () => {
                     className={`flex-shrink-0 w-24 h-24 md:w-20 md:h-20 rounded border-2 overflow-hidden transition-all ${imagemAtiva === img ? 'border-brand-red opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
                   >
                     <img
-                      src={img}
+                      src={withBase(img)}
                       className="w-full h-full object-cover"
                       alt={`Galeria ${idx + 1}`}
                       onError={(e) => { (e.target as HTMLImageElement).src = 'https://placehold.co/100x100/333/999?text=Foto'; }}
