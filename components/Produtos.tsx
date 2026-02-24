@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { ArrowRight, Info, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Produto } from '../tipos';
 
-const withBase = (src: string) =>
-  src.startsWith('/assets/') ? `${import.meta.env.BASE_URL}${src.slice(1)}` : src;
+const withBase = (src: string) => {
+  if (!src.startsWith('/assets/')) return src;
+  const normalizedBase = import.meta.env.BASE_URL.endsWith('/')
+    ? import.meta.env.BASE_URL
+    : `${import.meta.env.BASE_URL}/`;
+  return encodeURI(`${normalizedBase}${src.slice(1)}`);
+};
 
 // Configuração dos Produtos com caminhos locais
 // O desenvolvedor deve colocar as imagens na pasta public/assets/produtos/[id]/
