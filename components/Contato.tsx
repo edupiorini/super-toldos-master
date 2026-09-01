@@ -89,7 +89,7 @@ ${formulario.message}
                 </div>
                 <div>
                   <h3 className="font-bold text-brand-black">E-mail</h3>
-                  <p className="text-gray-600">contato@supertoldos.com.br</p>
+                  <p className="text-gray-600">supertoldos2@gmail.com</p>
                 </div>
               </div>
 
