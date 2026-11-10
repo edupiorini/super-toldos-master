@@ -12,9 +12,7 @@ const Rodape: React.FC<{ aoNavegar: (pagina: string) => void }> = ({ aoNavegar }
       <div className="max-w-screen-xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2">
-            <span className="font-display text-2xl font-bold text-white block mb-4">
-              SUPER<span className="text-brand-redLight">TOLDOS</span>
-            </span>
+            <img src="/logo-supertoldos-dark.svg" alt="Super Toldos" width="80" height="80" className="h-20 w-20 mb-4" loading="lazy" />
             <p className="max-w-sm text-sm leading-relaxed mb-6">
               Há mais de 15 anos oferecendo o melhor em coberturas e toldos.
               Qualidade garantida e instalação especializada em Taubaté, Vale do Paraíba e Litoral Norte.
