@@ -6,6 +6,9 @@ import {
   Send,
   MessageCircle,
   Instagram,
+  Clock,
+  Star,
+  Navigation,
 } from "lucide-react";
 import { PedidoOrcamento } from "../tipos";
 
@@ -20,6 +23,14 @@ const Contato: React.FC = () => {
 
   // Coloque o número do WhatsApp da empresa aqui (Apenas números, com DDD)
   const WHATSAPP_NUMBER = "5512981538545";
+
+  // Perfil da empresa no Google Maps (avaliações e rota)
+  const GOOGLE_MAPS_URL =
+    "https://www.google.com/maps/search/?api=1&query=Super+Toldos+Taubat%C3%A9";
+  const GOOGLE_MAPS_ROTA =
+    "https://www.google.com/maps/dir/?api=1&destination=Super+Toldos+Taubat%C3%A9";
+  const GOOGLE_MAPS_EMBED =
+    "https://www.google.com/maps?q=Super+Toldos,+Estr.+Mun.+Itapecirica,+1460,+Taubat%C3%A9+-+SP&output=embed";
 
   const lidarComEnvio = (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +130,24 @@ ${formulario.message}
                     Estrada municipal Itapecerica, 1460.
                     <br />
                     Bairro: Chácaras das Flores. Taubaté - SP.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                <div className="p-3 bg-white rounded-full shadow-sm text-brand-red">
+                  <Clock size={24} aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-brand-black">
+                    Horário de Atendimento
+                  </h3>
+                  <p className="text-gray-600 text-sm">
+                    Segunda a quinta: 8h às 17h30
+                    <br />
+                    Sexta: 8h às 16h30
+                    <br />
+                    Sábado e domingo: fechado
                   </p>
                 </div>
               </div>
@@ -259,6 +288,44 @@ ${formulario.message}
                 </p>
               </form>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <h2 className="font-display font-bold text-3xl text-brand-black mb-2">
+            Onde Estamos
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Veja como chegar e o que nossos clientes dizem sobre a Super Toldos
+            no Google.
+          </p>
+          <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+            <iframe
+              title="Mapa da Super Toldos em Taubaté"
+              src={GOOGLE_MAPS_EMBED}
+              className="w-full h-72 md:h-96 border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-[44px] px-6 py-3 bg-brand-red border-2 border-brand-red text-white font-bold rounded flex items-center justify-center gap-2 hover:bg-brand-black hover:border-brand-black transition-all"
+            >
+              <Star size={18} aria-hidden="true" /> Ver avaliações no Google
+            </a>
+            <a
+              href={GOOGLE_MAPS_ROTA}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-[44px] px-6 py-3 border-2 border-brand-black text-brand-black font-bold rounded flex items-center justify-center gap-2 hover:bg-brand-black hover:text-white transition-all"
+            >
+              <Navigation size={18} aria-hidden="true" /> Como chegar
+            </a>
           </div>
         </div>
       </div>
