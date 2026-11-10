@@ -17,7 +17,7 @@ const Contato: React.FC = () => {
     name: "",
     email: "",
     phone: "",
-    serviceType: "Toldo Cortina (Retrátil)",
+    serviceType: "",
     message: "",
   });
 
@@ -63,7 +63,7 @@ const Contato: React.FC = () => {
       name: "",
       email: "",
       phone: "",
-      serviceType: "Toldo Cortina (Retrátil)",
+      serviceType: "",
       message: "",
     });
   };
@@ -239,6 +239,7 @@ const Contato: React.FC = () => {
                   </label>
                   <select
                     id="campo-interesse"
+                    required
                     className="w-full bg-white/10 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all [&>option]:text-black"
                     value={formulario.serviceType}
                     onChange={(e) =>
@@ -248,6 +249,9 @@ const Contato: React.FC = () => {
                       })
                     }
                   >
+                    <option value="" disabled>
+                      Selecione o tipo
+                    </option>
                     <option>Toldo Cortina (Retrátil)</option>
                     <option>Toldo Automático</option>
                     <option>Cobertura Garagem (Policarbonato/Lona)</option>
