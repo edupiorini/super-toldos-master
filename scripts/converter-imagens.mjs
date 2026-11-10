@@ -1,6 +1,8 @@
-// Converte as imagens referenciadas em components/Produtos.tsx para WebP (lado máx. 1600px, qualidade 80).
+// Converte as imagens .jpg/.jpeg/.png de public/assets/produtos/ que ainda são referenciadas
+// (com essa extensão) em components/Produtos.tsx para WebP (lado máx. 1600px, qualidade 80),
+// gravando o .webp ao lado do original. NÃO move nem apaga os originais e NÃO altera o código:
+// os caminhos em Produtos.tsx devem ser trocados para .webp manualmente.
 // Uso: node scripts/converter-imagens.mjs   (requer: npm i --no-save sharp)
-// Os originais são movidos para assets/originais-produtos/ (fora de public/, logo não são publicados).
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";

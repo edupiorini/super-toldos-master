@@ -45,7 +45,6 @@ const PRODUTOS: Produto[] = [
       "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (12).webp",
       "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (13).webp",
       "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (1).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).webp",
       "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (3).webp",
       "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (4).webp",
       "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (5).webp",
@@ -369,6 +368,7 @@ const Produtos: React.FC = () => {
               {/* Imagem Principal Ativa */}
               <div className="flex-grow relative h-64 md:h-auto bg-gray-900 flex items-center justify-center overflow-hidden group/image">
                 <img
+                  key={imagemAtiva}
                   src={withBase(imagemAtiva)}
                   alt={produtoSelecionado.title}
                   decoding="async"

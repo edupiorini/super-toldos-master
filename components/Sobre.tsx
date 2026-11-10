@@ -49,7 +49,7 @@ const Sobre: React.FC = () => {
              <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
                <img
                  src={encodeURI("/assets/produtos/automatico/1.webp")}
-                 alt="Toldo retrátil automático instalado em residência"
+                 alt="Toldo retrátil instalado em residência"
                  loading="lazy"
                  decoding="async"
                  className="w-full h-full object-cover"

@@ -163,7 +163,7 @@ ${formulario.message}
                   <input
                     required
                     type="text"
-                    className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
+                    className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
                     placeholder="Seu nome"
                     value={formulario.name}
                     onChange={(e) =>
@@ -180,7 +180,7 @@ ${formulario.message}
                     <input
                       required
                       type="tel"
-                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
                       placeholder="(12) 99999-9999"
                       value={formulario.phone}
                       onChange={(e) =>
@@ -195,7 +195,7 @@ ${formulario.message}
                     <input
                       required
                       type="email"
-                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
                       placeholder="seu@email.com"
                       value={formulario.email}
                       onChange={(e) =>
@@ -239,7 +239,7 @@ ${formulario.message}
                   </label>
                   <textarea
                     rows={3}
-                    className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/30 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all resize-none"
+                    className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all resize-none"
                     placeholder="Descreva o que você precisa..."
                     value={formulario.message}
                     onChange={(e) =>
