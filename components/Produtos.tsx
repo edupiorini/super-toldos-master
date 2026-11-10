@@ -209,11 +209,11 @@ const Produtos: React.FC<ProdutosProps> = ({
             role="dialog"
             aria-modal="true"
             aria-labelledby="produto-titulo"
-            className="bg-white w-full max-w-5xl rounded-lg overflow-hidden shadow-2xl flex flex-col md:flex-row animate-[fadeUp_0.3s_ease-out] max-h-[90vh] md:max-h-[80vh]"
+            className="bg-white w-full max-w-5xl rounded-lg overflow-x-hidden overflow-y-auto md:overflow-hidden shadow-2xl flex flex-col md:flex-row animate-[fadeUp_0.3s_ease-out] max-h-[90vh] md:max-h-[80vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Coluna da Galeria (Esquerda/Topo) */}
-            <div className="w-full md:w-1/2 bg-black flex flex-col">
+            <div className="w-full md:w-1/2 bg-black flex flex-col max-md:shrink-0">
               {/* Imagem Principal Ativa */}
               <div className="flex-grow relative h-64 md:h-auto bg-gray-900 flex items-center justify-center overflow-hidden group/image">
                 <img
@@ -305,68 +305,70 @@ const Produtos: React.FC<ProdutosProps> = ({
             </div>
 
             {/* Coluna de Informações (Direita/Baixo) */}
-            <div className="w-full md:w-1/2 p-8 overflow-y-auto">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h3
-                    id="produto-titulo"
-                    className="font-display text-3xl font-bold text-brand-black"
+            <div className="w-full md:w-1/2 overflow-y-auto max-md:overflow-visible max-md:h-auto max-md:shrink-0 flex flex-col">
+              <div className="p-8 pb-36 md:pb-8">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <h3
+                      id="produto-titulo"
+                      className="font-display text-3xl font-bold text-brand-black"
+                    >
+                      {produtoSelecionado.title}
+                    </h3>
+                    <div className="h-1 w-20 bg-brand-red rounded mt-2"></div>
+                  </div>
+                  <button
+                    ref={botaoFecharRef}
+                    onClick={() => aoFecharProduto?.()}
+                    aria-label="Fechar"
+                    className="w-11 h-11 flex-shrink-0 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
                   >
-                    {produtoSelecionado.title}
-                  </h3>
-                  <div className="h-1 w-20 bg-brand-red rounded mt-2"></div>
+                    <X size={24} aria-hidden="true" />
+                  </button>
                 </div>
-                <button
-                  ref={botaoFecharRef}
-                  onClick={() => aoFecharProduto?.()}
-                  aria-label="Fechar"
-                  className="w-11 h-11 flex-shrink-0 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
-                >
-                  <X size={24} aria-hidden="true" />
-                </button>
+
+                <div className="space-y-8">
+                  <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                    <h4 className="flex items-center gap-2 text-sm font-bold text-brand-black uppercase mb-3">
+                      <Info size={16} className="text-brand-red" />
+                      Descrição Técnica
+                    </h4>
+                    <p className="text-gray-700 leading-relaxed">
+                      {produtoSelecionado.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-brand-black mb-4 text-sm uppercase tracking-wide">
+                      Características
+                    </h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {produtoSelecionado.features.map((feature, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-start gap-3 text-gray-600 text-sm"
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-brand-red mt-1.5 flex-shrink-0"></div>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-8">
-                <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
-                  <h4 className="flex items-center gap-2 text-sm font-bold text-brand-black uppercase mb-3">
-                    <Info size={16} className="text-brand-red" />
-                    Descrição Técnica
-                  </h4>
-                  <p className="text-gray-700 leading-relaxed">
-                    {produtoSelecionado.description}
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-bold text-brand-black mb-4 text-sm uppercase tracking-wide">
-                    Características
-                  </h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {produtoSelecionado.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-start gap-3 text-gray-600 text-sm"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-brand-red mt-1.5 flex-shrink-0"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="sticky bottom-0 bg-white pt-4 border-t border-gray-100 md:static">
-                  <p className="text-xs text-gray-400 mb-4 text-center uppercase tracking-wide">
-                    Gostou deste modelo?
-                  </p>
-                  <a
-                    href={`https://wa.me/5512981538545?text=${encodeURIComponent(`Olá, gostaria de um orçamento para o produto: ${produtoSelecionado.title}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center py-4 bg-brand-red text-white font-bold uppercase rounded hover:bg-brand-redHover transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                  >
-                    Solicitar Orçamento no WhatsApp
-                  </a>
-                </div>
+              <div className="sticky bottom-0 z-10 bg-white pt-3 pb-4 px-8 border-t border-gray-100 shadow-[0_-8px_16px_rgba(0,0,0,0.06)] md:static md:shadow-none md:pt-4 md:pb-8">
+                <p className="text-xs text-gray-400 mb-4 text-center uppercase tracking-wide">
+                  Gostou deste modelo?
+                </p>
+                <a
+                  href={`https://wa.me/5512981538545?text=${encodeURIComponent(`Olá, gostaria de um orçamento para o produto: ${produtoSelecionado.title}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center py-4 bg-brand-red text-white font-bold uppercase rounded hover:bg-brand-redHover transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  Solicitar Orçamento no WhatsApp
+                </a>
               </div>
             </div>
           </div>
