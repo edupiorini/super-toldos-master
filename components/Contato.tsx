@@ -259,6 +259,7 @@ const Contato: React.FC = () => {
                     <option>Coberturas para Passarelas</option>
                     <option>Cobertura com Termo Forro</option>
                     <option>Outros</option>
+                    <option>Não sei, preciso de orientação</option>
                   </select>
                 </div>
 
