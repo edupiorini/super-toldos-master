@@ -27,6 +27,8 @@ const Contato: React.FC = () => {
   // Perfil da empresa no Google Maps (avaliações e rota)
   const GOOGLE_MAPS_URL =
     "https://www.google.com/maps/search/?api=1&query=Super+Toldos+Taubat%C3%A9";
+  const GOOGLE_MAPS_ROTA =
+    "https://www.google.com/maps/dir/?api=1&destination=Super+Toldos+Taubat%C3%A9";
   const GOOGLE_MAPS_EMBED =
     "https://www.google.com/maps?q=Super+Toldos,+Estr.+Mun.+Itapecirica,+1460,+Taubat%C3%A9+-+SP&output=embed";
 
@@ -144,6 +146,8 @@ ${formulario.message}
                     Segunda a quinta: 8h às 17h30
                     <br />
                     Sexta: 8h às 16h30
+                    <br />
+                    Sábado e domingo: fechado
                   </p>
                 </div>
               </div>
@@ -310,12 +314,12 @@ ${formulario.message}
               href={GOOGLE_MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-h-[44px] px-6 py-3 bg-brand-red text-white font-bold rounded flex items-center justify-center gap-2 hover:bg-brand-black transition-all"
+              className="min-h-[44px] px-6 py-3 bg-brand-red border-2 border-brand-red text-white font-bold rounded flex items-center justify-center gap-2 hover:bg-brand-black hover:border-brand-black transition-all"
             >
               <Star size={18} aria-hidden="true" /> Ver avaliações no Google
             </a>
             <a
-              href={GOOGLE_MAPS_URL}
+              href={GOOGLE_MAPS_ROTA}
               target="_blank"
               rel="noopener noreferrer"
               className="min-h-[44px] px-6 py-3 border-2 border-brand-black text-brand-black font-bold rounded flex items-center justify-center gap-2 hover:bg-brand-black hover:text-white transition-all"
