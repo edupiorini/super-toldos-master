@@ -7,6 +7,7 @@ export default {
     "./tipos.ts",
     "./components/**/*.{ts,tsx}",
     "./services/**/*.{ts,tsx,js,jsx}",
+    "./dados/**/*.{ts,tsx}",
     "./*.{ts,tsx}",
   ],
   theme: {
