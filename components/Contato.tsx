@@ -63,8 +63,11 @@ ${formulario.message}
                 Fale Conosco
               </h2>
               <p className="text-gray-600 text-lg">
-                Preencha o formulário ao lado e nós receberemos sua mensagem
-                diretamente no WhatsApp para um atendimento mais rápido.
+                <span className="lg:hidden">Preencha e enviaremos no WhatsApp.</span>
+                <span className="hidden lg:inline">
+                  Preencha o formulário ao lado e nós receberemos sua mensagem
+                  diretamente no WhatsApp para um atendimento mais rápido.
+                </span>
               </p>
             </div>
 
@@ -77,7 +80,13 @@ ${formulario.message}
                   <h3 className="font-bold text-brand-black">
                     Telefone / WhatsApp
                   </h3>
-                  <p className="text-gray-600">
+                  <a
+                    href="tel:+5512981538545"
+                    className="text-brand-red font-bold hover:underline inline-block py-2"
+                  >
+                    (12) 98153-8545
+                  </a>
+                  <p className="text-gray-600 text-sm">
                     Priorizamos atendimento via WhatsApp
                   </p>
                 </div>
@@ -89,7 +98,12 @@ ${formulario.message}
                 </div>
                 <div>
                   <h3 className="font-bold text-brand-black">E-mail</h3>
-                  <p className="text-gray-600">supertoldos2@gmail.com</p>
+                  <a
+                    href="mailto:supertoldos2@gmail.com"
+                    className="text-brand-red hover:underline inline-block py-2"
+                  >
+                    supertoldos2@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -119,7 +133,7 @@ ${formulario.message}
                     href="https://www.instagram.com/super.toldostaubate/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-brand-red hover:underline"
+                    className="text-brand-red hover:underline inline-block py-2"
                   >
                     @super.toldostaubate
                   </a>
@@ -192,10 +206,14 @@ ${formulario.message}
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">
+                  <label
+                    htmlFor="campo-interesse"
+                    className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1"
+                  >
                     Interesse
                   </label>
                   <select
+                    id="campo-interesse"
                     className="w-full bg-white/10 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all [&>option]:text-black"
                     value={formulario.serviceType}
                     onChange={(e) =>
