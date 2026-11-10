@@ -214,7 +214,11 @@ const App: React.FC = () => {
           <div className="pt-24 min-h-screen">
             <div className="bg-gray-50 py-16 border-b border-gray-100">
               <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center">
-                <h1 className="font-display font-extrabold text-4xl md:text-5xl text-brand-black mb-4">
+                <h1
+                  id="catalogo-titulo"
+                  tabIndex={-1}
+                  className="font-display font-extrabold text-4xl md:text-5xl text-brand-black mb-4"
+                >
                   Catálogo de <span className="text-brand-red">Produtos</span>
                 </h1>
               </div>

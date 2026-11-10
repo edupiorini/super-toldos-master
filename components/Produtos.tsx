@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Info,
@@ -36,20 +36,78 @@ const Produtos: React.FC<ProdutosProps> = ({
     () => (slugAberto ? (produtoPorSlug(slugAberto)?.image ?? "") : ""),
   );
 
+  const botaoFecharRef = useRef<HTMLButtonElement>(null);
+  const dialogoRef = useRef<HTMLDivElement>(null);
+  const origemFocoRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     setImagemAtiva(produtoSelecionado?.image ?? "");
   }, [produtoSelecionado]);
 
   useEffect(() => {
     if (!produtoSelecionado) return;
+
+    const overflowAnterior = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    if (!origemFocoRef.current) {
+      const catalogo = document.getElementById("catalogo-titulo");
+      if (catalogo instanceof HTMLElement) {
+        origemFocoRef.current = catalogo;
+      }
+    }
+
+    botaoFecharRef.current?.focus();
+
+    const focaveis = (raiz: HTMLElement) =>
+      Array.from(
+        raiz.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => !el.hasAttribute("disabled"));
+
     const aoTeclar = (e: KeyboardEvent) => {
-      if (e.key === "Escape") aoFecharProduto?.();
+      if (e.key === "Escape") {
+        aoFecharProduto?.();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const raiz = dialogoRef.current;
+      if (!raiz) return;
+      const itens = focaveis(raiz);
+      if (itens.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const primeiro = itens[0];
+      const ultimo = itens[itens.length - 1];
+      const ativo = document.activeElement;
+      if (e.shiftKey) {
+        if (ativo === primeiro || !raiz.contains(ativo)) {
+          e.preventDefault();
+          ultimo.focus();
+        }
+      } else if (ativo === ultimo || !raiz.contains(ativo)) {
+        e.preventDefault();
+        primeiro.focus();
+      }
     };
+
     window.addEventListener("keydown", aoTeclar);
-    return () => window.removeEventListener("keydown", aoTeclar);
+    return () => {
+      window.removeEventListener("keydown", aoTeclar);
+      document.body.style.overflow = overflowAnterior;
+      const origem = origemFocoRef.current;
+      origemFocoRef.current = null;
+      origem?.focus();
+    };
   }, [produtoSelecionado, aoFecharProduto]);
 
-  const lidarComCliqueProduto = (produto: Produto) => {
+  const lidarComCliqueProduto = (
+    produto: Produto,
+    ev: React.MouseEvent<HTMLElement>,
+  ) => {
+    origemFocoRef.current = ev.currentTarget;
     setImagemAtiva(produto.image);
     aoAbrirProduto?.(produto.slug);
   };
@@ -97,7 +155,8 @@ const Produtos: React.FC<ProdutosProps> = ({
           {produtosAtivos().map((produto) => (
             <div
               key={produto.id}
-              onClick={() => lidarComCliqueProduto(produto)}
+              tabIndex={-1}
+              onClick={(e) => lidarComCliqueProduto(produto, e)}
               className="group bg-white rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 overflow-hidden flex flex-col"
             >
               <div className="relative h-64 overflow-hidden bg-gray-200">
@@ -146,6 +205,10 @@ const Produtos: React.FC<ProdutosProps> = ({
           onClick={() => aoFecharProduto?.()}
         >
           <div
+            ref={dialogoRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="produto-titulo"
             className="bg-white w-full max-w-5xl rounded-lg overflow-hidden shadow-2xl flex flex-col md:flex-row animate-[fadeUp_0.3s_ease-out] max-h-[90vh] md:max-h-[80vh]"
             onClick={(e) => e.stopPropagation()}
           >
@@ -157,6 +220,8 @@ const Produtos: React.FC<ProdutosProps> = ({
                   key={imagemAtiva}
                   src={withBase(imagemAtiva)}
                   alt={produtoSelecionado.title}
+                  fetchPriority="high"
+                  loading="eager"
                   decoding="async"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = "none";
@@ -243,12 +308,16 @@ const Produtos: React.FC<ProdutosProps> = ({
             <div className="w-full md:w-1/2 p-8 overflow-y-auto">
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="font-display text-3xl font-bold text-brand-black">
+                  <h3
+                    id="produto-titulo"
+                    className="font-display text-3xl font-bold text-brand-black"
+                  >
                     {produtoSelecionado.title}
                   </h3>
                   <div className="h-1 w-20 bg-brand-red rounded mt-2"></div>
                 </div>
                 <button
+                  ref={botaoFecharRef}
                   onClick={() => aoFecharProduto?.()}
                   aria-label="Fechar"
                   className="w-11 h-11 flex-shrink-0 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
@@ -285,7 +354,7 @@ const Produtos: React.FC<ProdutosProps> = ({
                   </ul>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100">
+                <div className="sticky bottom-0 bg-white pt-4 border-t border-gray-100 md:static">
                   <p className="text-xs text-gray-400 mb-4 text-center uppercase tracking-wide">
                     Gostou deste modelo?
                   </p>
