@@ -42,14 +42,24 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
         <div className="max-w-screen-xl mx-auto px-6 md:px-12">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <button onClick={() => lidarComClique('inicio')} className="group relative z-50 flex items-center gap-1 text-left">
+            <button onClick={() => lidarComClique('inicio')} className="group relative z-50 flex items-center gap-2 md:gap-2.5 text-left">
+              <img
+                src="/logo-supertoldos-mark.svg"
+                alt=""
+                width="48"
+                height="48"
+                className="h-11 w-11 md:h-12 md:w-12"
+                aria-hidden="true"
+              />
               <div className="flex flex-col leading-none">
                 <span className={`font-display text-2xl font-extrabold uppercase tracking-tight transition-colors ${
                   estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-black' : 'text-white'
                 }`}>
                   Super
                 </span>
-                <span className="font-display text-xl font-bold uppercase tracking-wider text-brand-red">
+                <span className={`font-display text-xl font-bold uppercase tracking-wider transition-colors ${
+                  estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-red' : 'text-brand-redLight'
+                }`}>
                   Toldos
                 </span>
               </div>
@@ -61,9 +71,11 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
                 <button
                   key={link.id}
                   onClick={() => lidarComClique(link.id)}
-                  className={`text-sm font-bold uppercase tracking-wide transition-colors duration-300 hover:text-brand-red ${
-                    paginaAtual === link.id 
-                      ? 'text-brand-red' 
+                  className={`text-sm font-bold uppercase tracking-wide transition-colors duration-300 ${
+                    estaRolando || paginaAtual !== 'inicio' ? 'hover:text-brand-red' : 'hover:text-brand-redLight'
+                  } ${
+                    paginaAtual === link.id
+                      ? (estaRolando || paginaAtual !== 'inicio' ? 'text-brand-red' : 'text-brand-redLight')
                       : (estaRolando || paginaAtual !== 'inicio' ? 'text-gray-700' : 'text-white/90')
                   }`}
                 >
@@ -82,6 +94,8 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
             <div className="md:hidden z-50 flex items-center gap-4">
               <button
                 onClick={() => setMenuMobileAberto(!menuMobileAberto)}
+                aria-label={menuMobileAberto ? 'Fechar menu' : 'Abrir menu'}
+                aria-expanded={menuMobileAberto}
                 className={`p-2 transition-colors ${
                   estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-black' : 'text-white'
                 }`}
@@ -115,7 +129,7 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
           </button>
           
           <div className="mt-auto mb-10 text-gray-500">
-             <p className="flex items-center gap-2 mb-2"><Phone size={18} /> (12) 98153-8545 </p>
+             <p className="mb-2"><a href="tel:+5512981538545" className="flex items-center gap-2 min-h-[44px]"><Phone size={18} /> (12) 98153-8545</a></p>
              <p>Taubaté - SP</p>
           </div>
         </div>

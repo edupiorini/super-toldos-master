@@ -11,8 +11,11 @@ const Inicio: React.FC<InicioProps> = ({ aoNavegar }) => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?q=80&w=2670&auto=format&fit=crop"
-          alt="Toldo Comercial Moderno"
+          src={encodeURI("/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).webp")}
+          alt="Toldo cortina retrátil com visor em área de lazer com piscina"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover opacity-50 md:opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent md:bg-gradient-to-r md:from-black/90 md:via-black/60 md:to-transparent"></div>
@@ -30,7 +33,7 @@ const Inicio: React.FC<InicioProps> = ({ aoNavegar }) => {
 
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl lg:text-7xl text-white leading-tight tracking-tight mb-6">
               SUPER TOLDOS: <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-white">EXCLUSIVIDADE</span> QUE SUA CASA MERECE.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-redLight to-white">EXCLUSIVIDADE</span> QUE SUA CASA MERECE.
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-gray-300 font-normal leading-relaxed mb-8 max-w-xl">

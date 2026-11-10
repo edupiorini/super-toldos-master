@@ -47,9 +47,11 @@ const Sobre: React.FC = () => {
           <div className="relative order-1 lg:order-2 px-4 lg:px-0">
              {/* Image Composition */}
              <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
-               <img 
-                 src="https://images.unsplash.com/photo-1621503460593-014c27a20c9a?q=80&w=2670&auto=format&fit=crop" 
-                 alt="Solda Eletrônica e Acabamento" 
+               <img
+                 src={encodeURI("/assets/produtos/automatico/1.webp")}
+                 alt="Toldo retrátil instalado em residência"
+                 loading="lazy"
+                 decoding="async"
                  className="w-full h-full object-cover"
                />
              </div>

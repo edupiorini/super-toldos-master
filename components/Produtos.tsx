@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRight,
   Info,
   Image as ImageIcon,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { Produto } from "../tipos";
 
@@ -26,37 +27,36 @@ const PRODUTOS: Produto[] = [
     description:
       "O Toldo Cortina é a solução perfeita para quem busca proteção contra sol e chuva sem perder a visão externa. Com acionamento vertical, ele funciona como uma parede móvel, ideal para fechar varandas, áreas de churrasqueira e corredores. Fabricado com lona de alta resistência e solda eletrônica.",
     image:
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).jpg",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).webp",
     gallery: [
-      "/assets/produtos/cortina/1.jpg",
-      "/assets/produtos/cortina/2.jpg",
-      "/assets/produtos/cortina/3.jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (1).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (2).jpeg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (3).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (4).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (5).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (6).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (7).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (8).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (9).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (10).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (11).jpeg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (12).jpg",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (13).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (1).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (3).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (4).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (5).jpg",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (6).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (1).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (2).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (3).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (4).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (5).jpg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (6).jpeg",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (7).jpeg",
+      "/assets/produtos/cortina/1.webp",
+      "/assets/produtos/cortina/2.webp",
+      "/assets/produtos/cortina/3.webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (1).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (2).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (3).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (4).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (5).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (6).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (7).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (8).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (9).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (10).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (11).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (12).webp",
+      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (13).webp",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (1).webp",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (3).webp",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (4).webp",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (5).webp",
+      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (6).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (1).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (2).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (3).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (4).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (5).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (6).webp",
+      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (7).webp",
     ],
     icon: Info,
     features: [
@@ -73,35 +73,35 @@ const PRODUTOS: Produto[] = [
     shortDescription:
       "Proteção para veículos em policarbonato, lona ou galvanizado.",
     description:
-      "Proteja seu veículo do sol e granizo com nossas coberturas especializadas. Estruturas robustas projetadas para durar, disponíveis em Policarbonato (para luminosidade), Telha Galvanizada (máxima durabilidade) ou Lona Tencionada.",
-    image: "/assets/produtos/garagem/main.jpg",
+      "Proteja seu veículo do sol e granizo com nossas coberturas especializadas. Estruturas robustas projetadas para durar, disponíveis em Policarbonato (para luminosidade), Telha Galvanizada (máxima durabilidade) ou Lona Tensionada.",
+    image: "/assets/produtos/garagem/main.webp",
     gallery: [
-      "/assets/produtos/garagem/1.jpg",
-      "/assets/produtos/garagem/2.jpg",
-      "/assets/produtos/garagem/3.jpg",
-      "/assets/produtos/garagem/4.jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (1).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (2).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (3).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (4).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (5).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (6).jpg",
-      "/assets/produtos/garagem/Garagem em lona/LONA (7).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (1).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (2).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (3).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (4).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (5).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (6).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (7).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (8).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (9).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (10).jpg",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (11).jpg",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (1).jpg",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (2).jpg",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (3).jpg",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (4).jpg",
+      "/assets/produtos/garagem/1.webp",
+      "/assets/produtos/garagem/2.webp",
+      "/assets/produtos/garagem/3.webp",
+      "/assets/produtos/garagem/4.webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (1).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (2).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (3).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (4).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (5).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (6).webp",
+      "/assets/produtos/garagem/Garagem em lona/LONA (7).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (1).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (2).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (3).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (4).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (5).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (6).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (7).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (8).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (9).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (10).webp",
+      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (11).webp",
+      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (1).webp",
+      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (2).webp",
+      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (3).webp",
+      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (4).webp",
     ],
     icon: Info,
     features: [
@@ -117,15 +117,15 @@ const PRODUTOS: Produto[] = [
     shortDescription: "Conforto e tecnologia com ou sem controle remoto.",
     description:
       "O máximo em conforto. Nossos toldos automáticos podem ser acionados por controle remoto ou interruptor. Compatível com sensores de vento e sol para recolhimento automático em caso de tempestade.",
-    image: "/assets/produtos/automatico/main.jpg",
+    image: "/assets/produtos/automatico/main.webp",
     gallery: [
-      "/assets/produtos/automatico/1.jpg",
-      "/assets/produtos/automatico/2.jpg",
-      "/assets/produtos/automatico/toldo automático (1).jpeg",
-      "/assets/produtos/automatico/toldo automático (2).jpeg",
-      "/assets/produtos/automatico/toldo automático (3).jpg",
-      "/assets/produtos/automatico/toldo automático (4).jpg",
-      "/assets/produtos/automatico/toldo automático (5).png",
+      "/assets/produtos/automatico/1.webp",
+      "/assets/produtos/automatico/2.webp",
+      "/assets/produtos/automatico/toldo automático (1).webp",
+      "/assets/produtos/automatico/toldo automático (2).webp",
+      "/assets/produtos/automatico/toldo automático (3).webp",
+      "/assets/produtos/automatico/toldo automático (4).webp",
+      "/assets/produtos/automatico/toldo automático (5).webp",
     ],
     icon: Info,
     features: [
@@ -142,49 +142,49 @@ const PRODUTOS: Produto[] = [
     shortDescription: "Para passarelas, corredores, janelas e portas.",
     description:
       "Ideal para proteção permanente de janelas, portas e vitrines comerciais. As capotas podem ser fixas ou móveis (abre e fecha), adicionando charme e proteção à fachada.",
-    image: "/assets/produtos/fixo/main.jpg",
+    image: "/assets/produtos/fixo/main.webp",
     gallery: [
-      "/assets/produtos/fixo/1.jpg",
-      "/assets/produtos/fixo/2.jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (1).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (2).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (3).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (4).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (5).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (6).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (7).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (8).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (9).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (10).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (11).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (12).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (13).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (14).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (15).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (16).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (17).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (18).jpg",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (19).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (1).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (2).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (3).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (4).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (5).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (6).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (7).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (8).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (9).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (10).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (11).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (12).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (13).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (14).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (15).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (16).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (17).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (18).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (19).jpg",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (20).jpg",
+      "/assets/produtos/fixo/1.webp",
+      "/assets/produtos/fixo/2.webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (1).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (2).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (3).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (4).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (5).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (6).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (7).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (8).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (9).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (10).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (11).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (12).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (13).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (14).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (15).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (16).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (17).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (18).webp",
+      "/assets/produtos/fixo/LONA/T. FX DE LONA (19).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (1).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (2).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (3).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (4).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (5).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (6).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (7).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (8).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (9).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (10).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (11).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (12).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (13).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (14).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (15).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (16).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (17).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (18).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (19).webp",
+      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (20).webp",
     ],
     icon: Info,
     features: [
@@ -200,28 +200,28 @@ const PRODUTOS: Produto[] = [
     shortDescription: "Proteção fixa para corredores e acessos externos.",
     description:
       "Coberturas fixas ideais para proteger passarelas, corredores e acessos. Disponíveis em policarbonato ou lona, com estrutura metálica robusta. Perfeitas para condomínios, empresas e áreas comerciais.",
-    image: "/assets/produtos/passarela/main.jpg",
+    image: "/assets/produtos/passarela/main.webp",
     gallery: [
-      "/assets/produtos/passarela/1.jpg",
-      "/assets/produtos/passarela/2.jpg",
-      "/assets/produtos/passarela/3.jpg",
-      "/assets/produtos/passarela/PASSARELA (1).jpg",
-      "/assets/produtos/passarela/PASSARELA (3).jpg",
-      "/assets/produtos/passarela/PASSARELA (4).jpg",
-      "/assets/produtos/passarela/PASSARELA (5).jpg",
-      "/assets/produtos/passarela/PASSARELA (6).jpg",
-      "/assets/produtos/passarela/PASSARELA (7).jpg",
-      "/assets/produtos/passarela/PASSARELA (8).jpg",
-      "/assets/produtos/passarela/PASSARELA (9).jpg",
-      "/assets/produtos/passarela/PASSARELA (10).jpg",
-      "/assets/produtos/passarela/PASSARELA (11).jpg",
-      "/assets/produtos/passarela/PASSARELA (12).jpg",
-      "/assets/produtos/passarela/PASSARELA (13).jpg",
-      "/assets/produtos/passarela/PASSARELA (14).jpg",
-      "/assets/produtos/passarela/PASSARELA (15).jpg",
-      "/assets/produtos/passarela/PASSARELA (16).jpg",
-      "/assets/produtos/passarela/PASSARELA (17).jpg",
-      "/assets/produtos/passarela/PASSARELA (18).jpg",
+      "/assets/produtos/passarela/1.webp",
+      "/assets/produtos/passarela/2.webp",
+      "/assets/produtos/passarela/3.webp",
+      "/assets/produtos/passarela/PASSARELA (1).webp",
+      "/assets/produtos/passarela/PASSARELA (3).webp",
+      "/assets/produtos/passarela/PASSARELA (4).webp",
+      "/assets/produtos/passarela/PASSARELA (5).webp",
+      "/assets/produtos/passarela/PASSARELA (6).webp",
+      "/assets/produtos/passarela/PASSARELA (7).webp",
+      "/assets/produtos/passarela/PASSARELA (8).webp",
+      "/assets/produtos/passarela/PASSARELA (9).webp",
+      "/assets/produtos/passarela/PASSARELA (10).webp",
+      "/assets/produtos/passarela/PASSARELA (11).webp",
+      "/assets/produtos/passarela/PASSARELA (12).webp",
+      "/assets/produtos/passarela/PASSARELA (13).webp",
+      "/assets/produtos/passarela/PASSARELA (14).webp",
+      "/assets/produtos/passarela/PASSARELA (15).webp",
+      "/assets/produtos/passarela/PASSARELA (16).webp",
+      "/assets/produtos/passarela/PASSARELA (17).webp",
+      "/assets/produtos/passarela/PASSARELA (18).webp",
     ],
     icon: Info,
     features: [
@@ -237,16 +237,16 @@ const PRODUTOS: Produto[] = [
     shortDescription: "Isolamento térmico e acústico para conforto total.",
     description:
       "Sistema de cobertura com isolamento termo acústico. Ideal para áreas que precisam de conforto térmico e redução de ruídos. Perfeito para áreas de convivência e coberturas residenciais.",
-    image: "/assets/produtos/termoforro/main.jpg",
+    image: "/assets/produtos/termoforro/main.webp",
     gallery: [
-      "/assets/produtos/termoforro/1.jpg",
-      "/assets/produtos/termoforro/2.jpg",
-      "/assets/produtos/termoforro/3.jpg",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (1).jpg",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (2).jpeg",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (3).jpeg",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (4).jpeg",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (5).jpeg",
+      "/assets/produtos/termoforro/1.webp",
+      "/assets/produtos/termoforro/2.webp",
+      "/assets/produtos/termoforro/3.webp",
+      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (1).webp",
+      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (2).webp",
+      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (3).webp",
+      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (4).webp",
+      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (5).webp",
     ],
     icon: Info,
     features: [
@@ -263,6 +263,15 @@ const Produtos: React.FC = () => {
     null,
   );
   const [imagemAtiva, setImagemAtiva] = useState<string>("");
+
+  useEffect(() => {
+    if (!produtoSelecionado) return;
+    const aoTeclar = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setProdutoSelecionado(null);
+    };
+    window.addEventListener("keydown", aoTeclar);
+    return () => window.removeEventListener("keydown", aoTeclar);
+  }, [produtoSelecionado]);
 
   const lidarComCliqueProduto = (produto: Produto) => {
     setProdutoSelecionado(produto);
@@ -323,10 +332,11 @@ const Produtos: React.FC = () => {
                 <img
                   src={withBase(produto.image)}
                   alt={produto.title}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
-                    // Fallback se a imagem não existir
-                    (e.target as HTMLImageElement).src =
-                      "https://placehold.co/600x400/eee/999?text=Foto+Real+Aqui";
+                    // Esconde a imagem quebrada e deixa o ícone de fallback à mostra
+                    (e.target as HTMLImageElement).style.display = "none";
                   }}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 relative z-10"
                 />
@@ -368,11 +378,12 @@ const Produtos: React.FC = () => {
               {/* Imagem Principal Ativa */}
               <div className="flex-grow relative h-64 md:h-auto bg-gray-900 flex items-center justify-center overflow-hidden group/image">
                 <img
+                  key={imagemAtiva}
                   src={withBase(imagemAtiva)}
                   alt={produtoSelecionado.title}
+                  decoding="async"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "https://placehold.co/800x600/333/999?text=Foto+Principal";
+                    (e.target as HTMLImageElement).style.display = "none";
                   }}
                   className="w-full h-full object-contain md:object-cover"
                 />
@@ -424,6 +435,8 @@ const Produtos: React.FC = () => {
                   <img
                     src={withBase(produtoSelecionado.image)}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                     alt="Principal"
                   />
                 </button>
@@ -439,9 +452,10 @@ const Produtos: React.FC = () => {
                       src={withBase(img)}
                       className="w-full h-full object-cover"
                       alt={`Galeria ${idx + 1}`}
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          "https://placehold.co/100x100/333/999?text=Foto";
+                        (e.target as HTMLImageElement).style.display = "none";
                       }}
                     />
                   </button>
@@ -460,9 +474,10 @@ const Produtos: React.FC = () => {
                 </div>
                 <button
                   onClick={() => setProdutoSelecionado(null)}
-                  className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
+                  aria-label="Fechar"
+                  className="w-11 h-11 flex-shrink-0 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
                 >
-                  <ArrowRight size={24} className="rotate-45" />
+                  <X size={24} aria-hidden="true" />
                 </button>
               </div>
 
@@ -499,7 +514,7 @@ const Produtos: React.FC = () => {
                     Gostou deste modelo?
                   </p>
                   <a
-                    href={`https://wa.me/5512981538545?text=Olá, gostaria de um orçamento para o produto: ${produtoSelecionado.title}`}
+                    href={`https://wa.me/5512981538545?text=${encodeURIComponent(`Olá, gostaria de um orçamento para o produto: ${produtoSelecionado.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full text-center py-4 bg-brand-red text-white font-bold uppercase rounded hover:bg-brand-redHover transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-1"
