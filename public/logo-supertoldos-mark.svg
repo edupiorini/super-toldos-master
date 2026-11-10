@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Super Toldos">
+  <!-- Super Toldos mark only (no wordmark). White circle, red border #C82924, 9-stripe awning #C82924/#1A1614, scaled and centered to fill the circle. Sibling of logo-supertoldos.svg. -->
+  <defs>
+    <clipPath id="mark-inner">
+      <circle cx="120" cy="120" r="110"/>
+    </clipPath>
+  </defs>
+  <circle cx="120" cy="120" r="113" fill="#FFFFFF" stroke="#C82924" stroke-width="6"/>
+  <g aria-hidden="true" clip-path="url(#mark-inner)">
+    <path fill="#C82924" d="M53.88 83.00 L66.90 83.00 L41.75 157.00 A9.59 10.71 0 0 1 22.56 157.00 Z"/>
+    <path fill="#1A1614" d="M68.79 83.00 L81.80 83.00 L63.71 157.00 A9.59 10.71 0 0 1 44.52 157.00 Z"/>
+    <path fill="#C82924" d="M83.68 83.00 L96.71 83.00 L85.66 157.00 A9.59 10.71 0 0 1 66.49 157.00 Z"/>
+    <path fill="#1A1614" d="M98.59 83.00 L111.60 83.00 L107.62 157.00 A9.59 10.71 0 0 1 88.45 157.00 Z"/>
+    <path fill="#C82924" d="M113.49 83.00 L126.51 83.00 L129.59 157.00 A9.59 10.71 0 0 1 110.41 157.00 Z"/>
+    <path fill="#1A1614" d="M128.40 83.00 L141.41 83.00 L151.55 157.00 A9.59 10.71 0 0 1 132.38 157.00 Z"/>
+    <path fill="#C82924" d="M143.29 83.00 L156.32 83.00 L173.51 157.00 A9.59 10.71 0 0 1 154.34 157.00 Z"/>
+    <path fill="#1A1614" d="M158.20 83.00 L171.21 83.00 L195.48 157.00 A9.59 10.71 0 0 1 176.29 157.00 Z"/>
+    <path fill="#C82924" d="M173.10 83.00 L186.12 83.00 L217.44 157.00 A9.59 10.71 0 0 1 198.25 157.00 Z"/>
+  </g>
+</svg>

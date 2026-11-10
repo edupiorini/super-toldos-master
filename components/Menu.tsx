@@ -42,8 +42,27 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
         <div className="max-w-screen-xl mx-auto px-6 md:px-12">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <button onClick={() => lidarComClique('inicio')} className="group relative z-50 flex items-center gap-1 text-left">
-              <img src="/logo-supertoldos.svg" alt="Super Toldos" width="56" height="56" className="h-14 w-14" />
+            <button onClick={() => lidarComClique('inicio')} className="group relative z-50 flex items-center gap-2 md:gap-2.5 text-left">
+              <img
+                src="/logo-supertoldos-mark.svg"
+                alt=""
+                width="48"
+                height="48"
+                className="h-11 w-11 md:h-12 md:w-12"
+                aria-hidden="true"
+              />
+              <div className="flex flex-col leading-none">
+                <span className={`font-display text-2xl font-extrabold uppercase tracking-tight transition-colors ${
+                  estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-black' : 'text-white'
+                }`}>
+                  Super
+                </span>
+                <span className={`font-display text-xl font-bold uppercase tracking-wider transition-colors ${
+                  estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-red' : 'text-brand-redLight'
+                }`}>
+                  Toldos
+                </span>
+              </div>
             </button>
 
             {/* Desktop Nav */}

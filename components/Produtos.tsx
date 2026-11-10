@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRight,
   Info,
   Image as ImageIcon,
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { Produto } from "../tipos";
 
@@ -263,6 +264,15 @@ const Produtos: React.FC = () => {
   );
   const [imagemAtiva, setImagemAtiva] = useState<string>("");
 
+  useEffect(() => {
+    if (!produtoSelecionado) return;
+    const aoTeclar = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setProdutoSelecionado(null);
+    };
+    window.addEventListener("keydown", aoTeclar);
+    return () => window.removeEventListener("keydown", aoTeclar);
+  }, [produtoSelecionado]);
+
   const lidarComCliqueProduto = (produto: Produto) => {
     setProdutoSelecionado(produto);
     setImagemAtiva(produto.image);
@@ -465,9 +475,9 @@ const Produtos: React.FC = () => {
                 <button
                   onClick={() => setProdutoSelecionado(null)}
                   aria-label="Fechar"
-                  className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
+                  className="w-11 h-11 flex-shrink-0 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600 transition-colors"
                 >
-                  <ArrowRight size={24} className="rotate-45" />
+                  <X size={24} aria-hidden="true" />
                 </button>
               </div>
 
