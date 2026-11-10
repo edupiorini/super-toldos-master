@@ -17,7 +17,7 @@ const Contato: React.FC = () => {
     name: "",
     email: "",
     phone: "",
-    serviceType: "Toldo Cortina (Retrátil)",
+    serviceType: "",
     message: "",
   });
 
@@ -36,17 +36,21 @@ const Contato: React.FC = () => {
     e.preventDefault();
 
     // 1. Formata a mensagem
-    const mensagemFormatada = `
-*NOVA SOLICITAÇÃO DE ORÇAMENTO (VIA SITE)*
------------------------------------
-👤 *Nome:* ${formulario.name}
-📱 *Telefone:* ${formulario.phone}
-📧 *Email:* ${formulario.email}
-🛠 *Interesse:* ${formulario.serviceType}
------------------------------------
-💬 *Mensagem:* 
-${formulario.message}
-    `.trim();
+    const linhas = [
+      "*NOVA SOLICITAÇÃO DE ORÇAMENTO (VIA SITE)*",
+      "-----------------------------------",
+      `👤 *Nome:* ${formulario.name.trim()}`,
+    ];
+    if (formulario.email.trim()) {
+      linhas.push(`📧 *Email:* ${formulario.email.trim()}`);
+    }
+    linhas.push(`🛠 *Interesse:* ${formulario.serviceType}`);
+    if (formulario.message.trim()) {
+      linhas.push("-----------------------------------");
+      linhas.push("💬 *Mensagem:*");
+      linhas.push(formulario.message.trim());
+    }
+    const mensagemFormatada = linhas.join("\n");
 
     // 2. Cria o link do WhatsApp
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagemFormatada)}`;
@@ -59,7 +63,7 @@ ${formulario.message}
       name: "",
       email: "",
       phone: "",
-      serviceType: "Toldo Cortina (Retrátil)",
+      serviceType: "",
       message: "",
     });
   };
@@ -186,12 +190,17 @@ ${formulario.message}
                 </h3>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">
+                  <label
+                    htmlFor="campo-nome"
+                    className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1"
+                  >
                     Nome
                   </label>
                   <input
+                    id="campo-nome"
                     required
                     type="text"
+                    autoComplete="name"
                     className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
                     placeholder="Seu nome"
                     value={formulario.name}
@@ -201,37 +210,24 @@ ${formulario.message}
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">
-                      Telefone / Zap
-                    </label>
-                    <input
-                      required
-                      type="tel"
-                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
-                      placeholder="(12) 99999-9999"
-                      value={formulario.phone}
-                      onChange={(e) =>
-                        setFormulario({ ...formulario, phone: e.target.value })
-                      }
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">
-                      Email
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
-                      placeholder="seu@email.com"
-                      value={formulario.email}
-                      onChange={(e) =>
-                        setFormulario({ ...formulario, email: e.target.value })
-                      }
-                    />
-                  </div>
+                <div>
+                  <label
+                    htmlFor="campo-email"
+                    className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1"
+                  >
+                    Email (opcional)
+                  </label>
+                  <input
+                    id="campo-email"
+                    type="email"
+                    autoComplete="email"
+                    className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all"
+                    placeholder="seu@email.com"
+                    value={formulario.email}
+                    onChange={(e) =>
+                      setFormulario({ ...formulario, email: e.target.value })
+                    }
+                  />
                 </div>
 
                 <div>
@@ -243,6 +239,7 @@ ${formulario.message}
                   </label>
                   <select
                     id="campo-interesse"
+                    required
                     className="w-full bg-white/10 border border-white/20 rounded p-3 text-white focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all [&>option]:text-black"
                     value={formulario.serviceType}
                     onChange={(e) =>
@@ -252,6 +249,9 @@ ${formulario.message}
                       })
                     }
                   >
+                    <option value="" disabled>
+                      Selecione o tipo
+                    </option>
                     <option>Toldo Cortina (Retrátil)</option>
                     <option>Toldo Automático</option>
                     <option>Cobertura Garagem (Policarbonato/Lona)</option>
@@ -259,17 +259,22 @@ ${formulario.message}
                     <option>Coberturas para Passarelas</option>
                     <option>Cobertura com Termo Forro</option>
                     <option>Outros</option>
+                    <option>Não sei, preciso de orientação</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1">
-                    Mensagem
+                  <label
+                    htmlFor="campo-mensagem"
+                    className="block text-xs uppercase font-bold tracking-wider text-gray-400 mb-1"
+                  >
+                    Mensagem (opcional)
                   </label>
                   <textarea
+                    id="campo-mensagem"
                     rows={3}
                     className="w-full bg-white/10 border border-white/20 rounded p-3 text-white placeholder-white/60 focus:outline-none focus:border-brand-red focus:bg-white/20 transition-all resize-none"
-                    placeholder="Descreva o que você precisa..."
+                    placeholder="Ex.: medidas aproximadas, bairro, se é casa, comércio, condomínio ou indústria"
                     value={formulario.message}
                     onChange={(e) =>
                       setFormulario({ ...formulario, message: e.target.value })
