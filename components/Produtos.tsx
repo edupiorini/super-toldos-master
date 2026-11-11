@@ -35,14 +35,22 @@ const Produtos: React.FC<ProdutosProps> = ({
   const [imagemAtiva, setImagemAtiva] = useState<string>(
     () => (slugAberto ? (produtoPorSlug(slugAberto)?.image ?? "") : ""),
   );
+  const [miniaturasProntas, setMiniaturasProntas] = useState(false);
 
   const botaoFecharRef = useRef<HTMLButtonElement>(null);
   const dialogoRef = useRef<HTMLDivElement>(null);
   const origemFocoRef = useRef<HTMLElement | null>(null);
+  const capaRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setImagemAtiva(produtoSelecionado?.image ?? "");
+    setMiniaturasProntas(false);
   }, [produtoSelecionado]);
+
+  useEffect(() => {
+    if (!produtoSelecionado) return;
+    if (capaRef.current?.complete) setMiniaturasProntas(true);
+  }, [produtoSelecionado, imagemAtiva]);
 
   useEffect(() => {
     if (!produtoSelecionado) return;
@@ -161,9 +169,12 @@ const Produtos: React.FC<ProdutosProps> = ({
                   <ImageIcon size={48} />
                 </div>
                 <img
-                  src={withBase(produto.image)}
+                  src={produtoSelecionado ? undefined : withBase(produto.image)}
                   alt={produto.title}
+                  width={800}
+                  height={256}
                   loading="lazy"
+                  fetchPriority="low"
                   decoding="async"
                   onError={(e) => {
                     // Esconde a imagem quebrada e deixa o ícone de fallback à mostra
@@ -214,13 +225,18 @@ const Produtos: React.FC<ProdutosProps> = ({
               <div className="flex-grow relative h-64 md:h-auto bg-gray-900 flex items-center justify-center overflow-hidden group/image">
                 <img
                   key={imagemAtiva}
+                  ref={capaRef}
                   src={withBase(imagemAtiva)}
                   alt={produtoSelecionado.title}
+                  width={800}
+                  height={256}
                   fetchPriority="high"
                   loading="eager"
                   decoding="async"
+                  onLoad={() => setMiniaturasProntas(true)}
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = "none";
+                    setMiniaturasProntas(true);
                   }}
                   className="w-full h-full object-contain md:object-cover"
                 />
@@ -263,13 +279,18 @@ const Produtos: React.FC<ProdutosProps> = ({
                   onClick={() => trocarImagem(produtoSelecionado.image)}
                   className={`flex-shrink-0 w-24 h-24 md:w-20 md:h-20 rounded border-2 overflow-hidden transition-all ${imagemAtiva === produtoSelecionado.image ? "border-brand-red opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
                 >
-                  <img
-                    src={withBase(produtoSelecionado.image)}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                    alt="Principal"
-                  />
+                  {miniaturasProntas && (
+                    <img
+                      src={withBase(produtoSelecionado.image)}
+                      className="w-full h-full object-cover"
+                      width={96}
+                      height={96}
+                      loading="lazy"
+                      fetchPriority="low"
+                      decoding="async"
+                      alt="Principal"
+                    />
+                  )}
                 </button>
 
                 {/* Miniaturas da Galeria */}
@@ -281,16 +302,21 @@ const Produtos: React.FC<ProdutosProps> = ({
                     onClick={() => trocarImagem(img)}
                     className={`flex-shrink-0 w-24 h-24 md:w-20 md:h-20 rounded border-2 overflow-hidden transition-all ${imagemAtiva === img ? "border-brand-red opacity-100" : "border-transparent opacity-60 hover:opacity-100"}`}
                   >
-                    <img
-                      src={withBase(img)}
-                      className="w-full h-full object-cover"
-                      alt={`Galeria ${idx + 1}`}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
+                    {miniaturasProntas && (
+                      <img
+                        src={withBase(img)}
+                        className="w-full h-full object-cover"
+                        width={96}
+                        height={96}
+                        alt={`Galeria ${idx + 1}`}
+                        loading="lazy"
+                        fetchPriority="low"
+                        decoding="async"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    )}
                   </button>
                 ))}
               </div>

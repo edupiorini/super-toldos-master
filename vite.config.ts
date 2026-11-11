@@ -5,10 +5,11 @@ import react from "@vitejs/plugin-react";
 import {
   META_CATALOGO,
   PAGINAS_ESTATICAS,
+  caminhoCapa,
   itensAtivos,
   SITE_URL,
 } from "./dados/catalogo";
-import { pluginGalerias } from "./plugins/galerias";
+import { lerGalerias, pluginGalerias } from "./plugins/galerias";
 
 const escaparAttr = (valor: string): string =>
   valor
@@ -21,8 +22,9 @@ const aplicarMetaHtml = (
   titulo: string,
   descricao: string,
   url: string,
-): string =>
-  html
+  imagemCapa?: string,
+): string => {
+  let saida = html
     .replace(/<title>[^<]*<\/title>/, `<title>${escaparAttr(titulo)}</title>`)
     .replace(
       /(<meta name="description" content=")[^"]*(")/,
@@ -38,6 +40,12 @@ const aplicarMetaHtml = (
     )
     .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${escaparAttr(url)}$2`)
     .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${escaparAttr(url)}$2`);
+  if (imagemCapa) {
+    const preload = `    <link rel="preload" as="image" href="${encodeURI(imagemCapa)}" fetchpriority="high">\n`;
+    saida = saida.replace("</head>", `${preload}  </head>`);
+  }
+  return saida;
+};
 
 const escreverSitemap = (saida: string) => {
   const caminhos = [
@@ -103,9 +111,15 @@ export default defineConfig(({ mode }) => {
           mkdirSync(path.join(saida, "produtos"), { recursive: true });
           writeFileSync(path.join(saida, "produtos", "index.html"), catalogo);
 
+          const galerias = lerGalerias();
           for (const produto of itensAtivos()) {
             const dir = path.join(saida, "produtos", produto.slug);
             mkdirSync(dir, { recursive: true });
+            const capa = caminhoCapa(
+              produto.pasta,
+              produto.capa,
+              galerias[produto.pasta] ?? [],
+            );
             writeFileSync(
               path.join(dir, "index.html"),
               aplicarMetaHtml(
@@ -113,6 +127,7 @@ export default defineConfig(({ mode }) => {
                 produto.pageTitle,
                 produto.metaDescription,
                 `${SITE_URL}/produtos/${produto.slug}`,
+                capa || undefined,
               ),
             );
           }
