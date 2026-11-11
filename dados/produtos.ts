@@ -1,6 +1,6 @@
 import galerias from "virtual:galerias";
 import { Produto } from "../tipos";
-import { CATALOGO } from "./catalogo";
+import { CATALOGO, caminhoCapa } from "./catalogo";
 
 export {
   SITE_URL,
@@ -9,21 +9,11 @@ export {
   PAGINAS_ESTATICAS,
 } from "./catalogo";
 
-const capaDoProduto = (pasta: string, capa: string | undefined, fotos: string[]): string => {
-  if (capa) {
-    const informada = `/assets/produtos/${pasta}/${capa}`;
-    if (fotos.includes(informada)) return informada;
-  }
-  const principal = `/assets/produtos/${pasta}/main.webp`;
-  if (fotos.includes(principal)) return principal;
-  return fotos[0] ?? "";
-};
-
 export const PRODUTOS: Produto[] = CATALOGO.map(({ pasta, capa, ...resto }) => {
   const fotos = galerias[pasta] ?? [];
   return {
     ...resto,
-    image: capaDoProduto(pasta, capa, fotos),
+    image: caminhoCapa(pasta, capa, fotos),
     gallery: fotos,
   };
 });

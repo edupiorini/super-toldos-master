@@ -164,4 +164,20 @@ export const CATALOGO: ItemCatalogo[] = [
   },
 ];
 
+
+/** Capa: arquivo informado, senão main.webp, senão a primeira foto da pasta. */
+export const caminhoCapa = (
+  pasta: string,
+  capa: string | undefined,
+  fotos: string[],
+): string => {
+  if (capa) {
+    const informada = `/assets/produtos/${pasta}/${capa}`;
+    if (fotos.includes(informada)) return informada;
+  }
+  const principal = `/assets/produtos/${pasta}/main.webp`;
+  if (fotos.includes(principal)) return principal;
+  return fotos[0] ?? "";
+};
+
 export const itensAtivos = (): ItemCatalogo[] => CATALOGO.filter((p) => p.ativo);
