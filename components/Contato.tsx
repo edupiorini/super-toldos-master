@@ -11,6 +11,7 @@ import {
   Navigation,
 } from "lucide-react";
 import { PedidoOrcamento } from "../tipos";
+import { produtosAtivos } from "../dados/produtos";
 
 const Contato: React.FC = () => {
   const [formulario, setFormulario] = useState<PedidoOrcamento>({
@@ -252,12 +253,11 @@ const Contato: React.FC = () => {
                     <option value="" disabled>
                       Selecione o tipo
                     </option>
-                    <option>Toldo Cortina (Retrátil)</option>
-                    <option>Toldo Automático</option>
-                    <option>Cobertura Garagem (Policarbonato/Lona)</option>
-                    <option>Toldos Fixos e Capotas</option>
-                    <option>Coberturas para Passarelas</option>
-                    <option>Cobertura com Termo Forro</option>
+                    {produtosAtivos().map((produto) => (
+                      <option key={produto.id}>
+                        {produto.rotuloInteresse ?? produto.title}
+                      </option>
+                    ))}
                     <option>Outros</option>
                     <option>Não sei, preciso de orientação</option>
                   </select>

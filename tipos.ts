@@ -1,14 +1,16 @@
-import { LucideIcon } from 'lucide-react';
-
 export interface Produto {
   id: string;
+  slug: string;
+  ativo: boolean;
   title: string;
   shortDescription: string;
   description: string; // Descrição fixa em vez de IA
   image: string; // Imagem principal
   gallery: string[]; // Lista de imagens da galeria
-  icon: LucideIcon;
   features: string[];
+  pageTitle: string;
+  metaDescription: string;
+  rotuloInteresse?: string;
 }
 
 export interface PedidoOrcamento {

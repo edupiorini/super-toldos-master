@@ -5,8 +5,9 @@ import Produtos from './components/Produtos';
 import Contato from './components/Contato';
 import Sobre from './components/Sobre';
 import { Instagram, MessageCircle, FileText, Ruler, HardHat, CheckCircle } from 'lucide-react';
+import { caminhoProduto, META_CATALOGO, META_PADRAO, produtoPorSlug, produtosAtivos, SITE_URL } from './dados/produtos';
 
-const Rodape: React.FC<{ aoNavegar: (pagina: string) => void }> = ({ aoNavegar }) => {
+const Rodape: React.FC<{ aoNavegar: (pagina: string) => void; aoAbrirProduto: (slug: string) => void }> = ({ aoNavegar, aoAbrirProduto }) => {
   return (
     <footer className="bg-brand-black text-gray-400 py-16 border-t border-gray-800">
       <div className="max-w-screen-xl mx-auto px-6 md:px-12">
@@ -27,10 +28,11 @@ const Rodape: React.FC<{ aoNavegar: (pagina: string) => void }> = ({ aoNavegar }
           <div>
             <h4 className="text-white font-bold mb-6 uppercase text-sm tracking-wider">Produtos</h4>
             <ul className="space-y-1 text-sm">
-              <li><button onClick={() => aoNavegar('produtos')} className="hover:text-brand-redLight transition-colors text-left min-h-[44px] min-w-[44px] inline-flex items-center">Toldo Cortina</button></li>
-              <li><button onClick={() => aoNavegar('produtos')} className="hover:text-brand-redLight transition-colors text-left min-h-[44px] min-w-[44px] inline-flex items-center">Cobertura de Garagem</button></li>
-              <li><button onClick={() => aoNavegar('produtos')} className="hover:text-brand-redLight transition-colors text-left min-h-[44px] min-w-[44px] inline-flex items-center">Toldo Automático</button></li>
-              <li><button onClick={() => aoNavegar('produtos')} className="hover:text-brand-redLight transition-colors text-left min-h-[44px] min-w-[44px] inline-flex items-center">Toldos Fixos e Capotas</button></li>
+              {produtosAtivos().map((produto) => (
+                <li key={produto.id}>
+                  <button onClick={() => aoAbrirProduto(produto.slug)} className="hover:text-brand-redLight transition-colors text-left min-h-[44px] min-w-[44px] inline-flex items-center">{produto.title}</button>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -116,24 +118,83 @@ const ROTAS: Record<string, Pagina> = {
   '/orcamento': 'contato',
 };
 
-const paginaDoCaminho = (caminho: string): Pagina =>
-  ROTAS[caminho.replace(/\/+$/, '') || '/'] ?? 'inicio';
+type Rota = { pagina: Pagina; slug: string | null; caminho: string };
+
+const caminhoAtual = (pathname: string = window.location.pathname): string =>
+  pathname.replace(/\/+$/, '') || '/';
+
+const lerRota = (pathname: string): Rota => {
+  const caminho = caminhoAtual(pathname);
+  const produto = caminho.match(/^\/produtos\/([^/]+)$/);
+  if (produto) {
+    const encontrado = produtoPorSlug(produto[1]);
+    if (encontrado) {
+      return { pagina: 'produtos', slug: encontrado.slug, caminho: caminhoProduto(encontrado.slug) };
+    }
+    return { pagina: 'produtos', slug: null, caminho: '/produtos' };
+  }
+  return { pagina: ROTAS[caminho] ?? 'inicio', slug: null, caminho };
+};
+
+const aplicarMeta = (rota: Rota) => {
+  let title = META_PADRAO.title;
+  let description = META_PADRAO.description;
+  if (rota.slug) {
+    const produto = produtoPorSlug(rota.slug);
+    if (produto) {
+      title = produto.pageTitle;
+      description = produto.metaDescription;
+    }
+  } else if (rota.pagina === 'produtos') {
+    title = META_CATALOGO.title;
+    description = META_CATALOGO.description;
+  }
+  const url = `${SITE_URL}${rota.caminho === '/' ? '/' : rota.caminho}`;
+  document.title = title;
+  const definir = (seletor: string, atributo: string, valor: string) => {
+    const el = document.querySelector(seletor);
+    if (el) el.setAttribute(atributo, valor);
+  };
+  definir('meta[name="description"]', 'content', description);
+  definir('meta[property="og:title"]', 'content', title);
+  definir('meta[property="og:description"]', 'content', description);
+  definir('meta[property="og:url"]', 'content', url);
+  definir('link[rel="canonical"]', 'href', url);
+};
 
 const App: React.FC = () => {
-  const [paginaAtual, setPaginaAtual] = useState<Pagina>(() => paginaDoCaminho(window.location.pathname));
+  const inicial = lerRota(window.location.pathname);
+  const [paginaAtual, setPaginaAtual] = useState<Pagina>(inicial.pagina);
+  const [produtoSlug, setProdutoSlug] = useState<string | null>(inicial.slug);
+
+  const aplicarRota = (rota: Rota, modo: 'push' | 'replace' | 'nenhum') => {
+    if (modo !== 'nenhum' && caminhoAtual() !== rota.caminho) {
+      if (modo === 'replace') window.history.replaceState(null, '', rota.caminho);
+      else window.history.pushState(null, '', rota.caminho);
+    }
+    setPaginaAtual(rota.pagina);
+    setProdutoSlug(rota.slug);
+    aplicarMeta(rota);
+  };
 
   useEffect(() => {
-    const aoVoltar = () => setPaginaAtual(paginaDoCaminho(window.location.pathname));
+    aplicarRota(lerRota(window.location.pathname), 'replace');
+    const aoVoltar = () => aplicarRota(lerRota(window.location.pathname), 'replace');
     window.addEventListener('popstate', aoVoltar);
     return () => window.removeEventListener('popstate', aoVoltar);
   }, []);
 
-  const navegarPara = (pagina: string) => {
-    setPaginaAtual(pagina as Pagina);
-    const caminho = pagina === 'inicio' ? '/' : `/${pagina}`;
-    if (window.location.pathname !== caminho) window.history.pushState(null, '', caminho);
+  const irPara = (caminho: string) => {
+    aplicarRota(lerRota(caminho), 'push');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const navegarPara = (pagina: string) => {
+    irPara(pagina === 'inicio' ? '/' : `/${pagina}`);
+  };
+
+  const abrirProduto = (slug: string) => irPara(caminhoProduto(slug));
+  const fecharProduto = () => irPara('/produtos');
 
   const renderizarPagina = () => {
     switch (paginaAtual) {
@@ -142,7 +203,7 @@ const App: React.FC = () => {
           <>
             <Inicio aoNavegar={navegarPara} />
             <SecaoProcesso />
-            <Produtos />
+            <Produtos slugAberto={produtoSlug} aoAbrirProduto={abrirProduto} aoFecharProduto={fecharProduto} />
             <Contato />
           </>
         );
@@ -153,12 +214,16 @@ const App: React.FC = () => {
           <div className="pt-24 min-h-screen">
             <div className="bg-gray-50 py-16 border-b border-gray-100">
               <div className="max-w-screen-xl mx-auto px-6 md:px-12 text-center">
-                <h1 className="font-display font-extrabold text-4xl md:text-5xl text-brand-black mb-4">
+                <h1
+                  id="catalogo-titulo"
+                  tabIndex={-1}
+                  className="font-display font-extrabold text-4xl md:text-5xl text-brand-black mb-4"
+                >
                   Catálogo de <span className="text-brand-red">Produtos</span>
                 </h1>
               </div>
             </div>
-            <Produtos />
+            <Produtos slugAberto={produtoSlug} aoAbrirProduto={abrirProduto} aoFecharProduto={fecharProduto} />
             <div className="bg-brand-black py-20 mt-12 text-center text-white">
               <h2 className="text-3xl font-display font-bold mb-6">Não encontrou o que procura?</h2>
               <p className="mb-8 text-gray-300">Fazemos projetos sob medida para sua necessidade.</p>
@@ -185,7 +250,7 @@ const App: React.FC = () => {
       <main className="flex-grow">
         {renderizarPagina()}
       </main>
-      <Rodape aoNavegar={navegarPara} />
+      <Rodape aoNavegar={navegarPara} aoAbrirProduto={abrirProduto} />
       <BotaoWhatsApp />
     </div>
   );
