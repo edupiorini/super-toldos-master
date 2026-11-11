@@ -5,9 +5,10 @@ import react from "@vitejs/plugin-react";
 import {
   META_CATALOGO,
   PAGINAS_ESTATICAS,
-  produtosAtivos,
+  itensAtivos,
   SITE_URL,
-} from "./dados/produtos";
+} from "./dados/catalogo";
+import { pluginGalerias } from "./plugins/galerias";
 
 const escaparAttr = (valor: string): string =>
   valor
@@ -41,7 +42,7 @@ const aplicarMetaHtml = (
 const escreverSitemap = (saida: string) => {
   const caminhos = [
     ...PAGINAS_ESTATICAS,
-    ...produtosAtivos().map((produto) => `/produtos/${produto.slug}`),
+    ...itensAtivos().map((produto) => `/produtos/${produto.slug}`),
   ];
   const urls = caminhos
     .map((caminho) => {
@@ -63,6 +64,7 @@ export default defineConfig(({ mode }) => {
       host: "0.0.0.0",
     },
     plugins: [
+      pluginGalerias(),
       react(),
       {
         // vite preview, sem barra no final, não abre sozinho o index.html da pasta.
@@ -101,7 +103,7 @@ export default defineConfig(({ mode }) => {
           mkdirSync(path.join(saida, "produtos"), { recursive: true });
           writeFileSync(path.join(saida, "produtos", "index.html"), catalogo);
 
-          for (const produto of produtosAtivos()) {
+          for (const produto of itensAtivos()) {
             const dir = path.join(saida, "produtos", produto.slug);
             mkdirSync(dir, { recursive: true });
             writeFileSync(

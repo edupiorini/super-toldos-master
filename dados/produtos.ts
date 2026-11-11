@@ -1,305 +1,32 @@
+import galerias from "virtual:galerias";
 import { Produto } from "../tipos";
+import { CATALOGO } from "./catalogo";
 
-export const SITE_URL = "https://www.supertoldos.com.br";
+export {
+  SITE_URL,
+  META_PADRAO,
+  META_CATALOGO,
+  PAGINAS_ESTATICAS,
+} from "./catalogo";
 
-export const META_PADRAO = {
-  title: "Toldos e Coberturas em Taubaté | Super Toldos",
-  description:
-    "Super Toldos em Taubaté-SP: fabricação e instalação de toldos e coberturas no Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
+const capaDoProduto = (pasta: string, capa: string | undefined, fotos: string[]): string => {
+  if (capa) {
+    const informada = `/assets/produtos/${pasta}/${capa}`;
+    if (fotos.includes(informada)) return informada;
+  }
+  const principal = `/assets/produtos/${pasta}/main.webp`;
+  if (fotos.includes(principal)) return principal;
+  return fotos[0] ?? "";
 };
 
-export const META_CATALOGO = {
-  title: "Catálogo de Produtos | Super Toldos",
-  description:
-    "Linha completa de toldos e coberturas em Taubaté, Vale do Paraíba e Litoral Norte. Veja a galeria e peça orçamento grátis no WhatsApp.",
-};
-
-export const PRODUTOS: Produto[] = [
-  {
-    id: "cortina",
-    slug: "toldo-cortina",
-    ativo: true,
-    pageTitle: "Toldo Cortina em Taubaté | Super Toldos",
-    metaDescription: "Toldo cortina retrátil vertical para varandas e áreas gourmet, com proteção contra sol e chuva. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Toldo Cortina (Retrátil)",
-    title: "Toldo Cortina",
-    shortDescription: "Retrátil vertical. Ideal para varandas e áreas gourmet.",
-    description:
-      "O Toldo Cortina é a solução perfeita para quem busca proteção contra sol e chuva sem perder a visão externa. Com acionamento vertical, ele funciona como uma parede móvel, ideal para fechar varandas, áreas de churrasqueira e corredores. Fabricado com lona de alta resistência e solda eletrônica.",
-    image:
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (2).webp",
-    gallery: [
-      "/assets/produtos/cortina/1.webp",
-      "/assets/produtos/cortina/2.webp",
-      "/assets/produtos/cortina/3.webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (1).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (2).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (3).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (4).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (5).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (6).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (7).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (8).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (9).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (10).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (11).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (12).webp",
-      "/assets/produtos/cortina/COM BRAÇO DE AVANÇO/Cortina retrátil COM BRAÇO DE AVANÇO (13).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (1).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (3).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (4).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (5).webp",
-      "/assets/produtos/cortina/COM VISOR/Cortina retrátil COM VISOR (6).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (1).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (2).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (3).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (4).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (5).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (6).webp",
-      "/assets/produtos/cortina/SEM VISOR/Cortina retrátil SEM VISOR (7).webp",
-    ],
-    features: [
-      "Proteção contra sol e chuva",
-      "Acionamento manual ou motorizado",
-      "Visor transparente opcional",
-      "Lona PVC com Solda Eletrônica",
-    ],
-  },
-
-  {
-    id: "garagem",
-    slug: "cobertura-de-garagem",
-    ativo: true,
-    pageTitle: "Coberturas para Garagem em Taubaté | Super Toldos",
-    metaDescription: "Coberturas para garagem em policarbonato, lona ou telha galvanizada. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Cobertura Garagem (Policarbonato/Lona)",
-    title: "Coberturas para Garagem",
-    shortDescription:
-      "Proteção para veículos em policarbonato, lona ou galvanizado.",
-    description:
-      "Proteja seu veículo do sol e granizo com nossas coberturas especializadas. Estruturas robustas projetadas para durar, disponíveis em Policarbonato (para luminosidade), Telha Galvanizada (máxima durabilidade) ou Lona Tensionada.",
-    image: "/assets/produtos/garagem/main.webp",
-    gallery: [
-      "/assets/produtos/garagem/1.webp",
-      "/assets/produtos/garagem/2.webp",
-      "/assets/produtos/garagem/3.webp",
-      "/assets/produtos/garagem/4.webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (1).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (2).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (3).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (4).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (5).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (6).webp",
-      "/assets/produtos/garagem/Garagem em lona/LONA (7).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (1).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (2).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (3).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (4).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (5).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (6).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (7).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (8).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (9).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (10).webp",
-      "/assets/produtos/garagem/Garagem em policarbonato/POLICARBONATO (11).webp",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (1).webp",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (2).webp",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (3).webp",
-      "/assets/produtos/garagem/Garagem em telha galvanizada/TELHA GALVANIZADA (4).webp",
-    ],
-    features: [
-      "Alta resistência a granizo",
-      "Proteção UV para veículos",
-      "Estrutura reforçada",
-      "Opção termoacústica",
-    ],
-  },
-  {
-    id: "automatico",
-    slug: "toldo-automatico",
-    ativo: true,
-    pageTitle: "Toldo Automático em Taubaté | Super Toldos",
-    metaDescription: "Toldos automáticos com acionamento por controle remoto ou interruptor e sensor de vento opcional. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Toldo Automático",
-    title: "Toldo Automático",
-    shortDescription: "Conforto e tecnologia com ou sem controle remoto.",
-    description:
-      "O máximo em conforto. Nossos toldos automáticos podem ser acionados por controle remoto ou interruptor. Compatível com sensores de vento e sol para recolhimento automático em caso de tempestade.",
-    image: "/assets/produtos/automatico/main.webp",
-    gallery: [
-      "/assets/produtos/automatico/1.webp",
-      "/assets/produtos/automatico/2.webp",
-      "/assets/produtos/automatico/toldo automático (1).webp",
-      "/assets/produtos/automatico/toldo automático (2).webp",
-      "/assets/produtos/automatico/toldo automático (3).webp",
-      "/assets/produtos/automatico/toldo automático (4).webp",
-      "/assets/produtos/automatico/toldo automático (5).webp",
-    ],
-    features: [
-      "Acionamento fácil",
-      "Sensor de vento opcional",
-      "Motorização silenciosa",
-      "Maior vida útil da lona",
-    ],
-  },
-
-  {
-    id: "fixo",
-    slug: "toldos-fixos",
-    ativo: true,
-    pageTitle: "Toldos Fixos em Taubaté | Super Toldos",
-    metaDescription: "Toldos fixos em lona ou policarbonato para janelas, portas e vitrines. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Toldos Fixos",
-    title: "Toldos Fixos",
-    shortDescription:
-      "Proteção permanente para janelas, portas e vitrines, em lona ou policarbonato.",
-    description:
-      "O toldo fixo é indicado para quem precisa de proteção permanente contra sol e chuva em janelas, portas e vitrines. Fabricamos sob medida em lona ou policarbonato, para uso residencial e comercial.",
-    image: "/assets/produtos/fixo/main.webp",
-    gallery: [
-      "/assets/produtos/fixo/1.webp",
-      "/assets/produtos/fixo/2.webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (1).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (2).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (3).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (4).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (5).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (6).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (7).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (8).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (9).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (10).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (11).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (12).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (13).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (14).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (15).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (16).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (17).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (18).webp",
-      "/assets/produtos/fixo/LONA/T. FX DE LONA (19).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (1).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (2).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (3).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (4).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (5).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (6).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (7).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (8).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (9).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (10).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (11).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (12).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (13).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (14).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (15).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (16).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (17).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (18).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (19).webp",
-      "/assets/produtos/fixo/POLICARBONATO/FIXO DE POLICARBONATO (20).webp",
-    ],
-    features: [
-      "Proteção permanente",
-      "Lona ou policarbonato",
-      "Ideal para residências e comércios",
-      "Personalizável com logo",
-    ],
-  },
-  {
-    id: "passarela",
-    slug: "coberturas-para-passarelas",
-    ativo: true,
-    pageTitle: "Coberturas para Passarelas em Taubaté | Super Toldos",
-    metaDescription: "Coberturas fixas para passarelas, corredores e acessos, em policarbonato ou lona. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Coberturas para Passarelas",
-    title: "Coberturas para Passarelas",
-    shortDescription: "Proteção fixa para corredores e acessos externos.",
-    description:
-      "Coberturas fixas ideais para proteger passarelas, corredores e acessos. Disponíveis em policarbonato ou lona, com estrutura metálica robusta. Perfeitas para condomínios, empresas e áreas comerciais.",
-    image: "/assets/produtos/passarela/main.webp",
-    gallery: [
-      "/assets/produtos/passarela/1.webp",
-      "/assets/produtos/passarela/2.webp",
-      "/assets/produtos/passarela/3.webp",
-      "/assets/produtos/passarela/PASSARELA (1).webp",
-      "/assets/produtos/passarela/PASSARELA (3).webp",
-      "/assets/produtos/passarela/PASSARELA (4).webp",
-      "/assets/produtos/passarela/PASSARELA (5).webp",
-      "/assets/produtos/passarela/PASSARELA (6).webp",
-      "/assets/produtos/passarela/PASSARELA (7).webp",
-      "/assets/produtos/passarela/PASSARELA (8).webp",
-      "/assets/produtos/passarela/PASSARELA (9).webp",
-      "/assets/produtos/passarela/PASSARELA (10).webp",
-      "/assets/produtos/passarela/PASSARELA (11).webp",
-      "/assets/produtos/passarela/PASSARELA (12).webp",
-      "/assets/produtos/passarela/PASSARELA (13).webp",
-      "/assets/produtos/passarela/PASSARELA (14).webp",
-      "/assets/produtos/passarela/PASSARELA (15).webp",
-      "/assets/produtos/passarela/PASSARELA (16).webp",
-      "/assets/produtos/passarela/PASSARELA (17).webp",
-      "/assets/produtos/passarela/PASSARELA (18).webp",
-    ],
-    features: [
-      "Estrutura metálica reforçada",
-      "Proteção permanente",
-      "Policarbonato ou lona",
-      "Ideal para condomínios e empresas",
-    ],
-  },
-  {
-    id: "termoforro",
-    slug: "cobertura-com-termo-forro",
-    ativo: true,
-    pageTitle: "Cobertura com Termo Forro em Taubaté | Super Toldos",
-    metaDescription: "Cobertura com termo forro para isolamento térmico e redução de ruídos. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Cobertura com Termo Forro",
-    title: "Cobertura com Termo Forro",
-    shortDescription: "Isolamento térmico e acústico para conforto total.",
-    description:
-      "Sistema de cobertura com isolamento termo acústico. Ideal para áreas que precisam de conforto térmico e redução de ruídos. Perfeito para áreas de convivência e coberturas residenciais.",
-    image: "/assets/produtos/termoforro/main.webp",
-    gallery: [
-      "/assets/produtos/termoforro/1.webp",
-      "/assets/produtos/termoforro/2.webp",
-      "/assets/produtos/termoforro/3.webp",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (1).webp",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (2).webp",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (3).webp",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (4).webp",
-      "/assets/produtos/termoforro/COBERTURA TERMOFORRO (5).webp",
-    ],
-    features: [
-      "Isolamento térmico",
-      "Redução acústica",
-      "Acabamento premium",
-      "Conforto ambiental",
-    ],
-  },
-
-  // Oculto até haver fotos. Para ativar: adicionar as imagens em
-  // public/assets/produtos/capotas/ e mudar ativo para true.
-  {
-    id: "capotas",
-    slug: "capotas-retrateis",
-    ativo: false,
-    pageTitle: "Capotas Retráteis em Taubaté | Super Toldos",
-    metaDescription: "Capotas retráteis que abrem e fecham, nos modelos reta ou curva. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
-    rotuloInteresse: "Capotas Retráteis",
-    title: "Capotas Retráteis",
-    shortDescription: "Capotas que abrem e fecham, para janelas, portas e fachadas.",
-    description:
-      "A capota retrátil protege janelas, portas e fachadas e pode ser aberta ou recolhida conforme a necessidade. Disponível nos modelos reta ou curva, sob medida para residências e comércios.",
-    image: "/assets/produtos/capotas/main.webp",
-    gallery: [],
-    features: [
-      "Abre e fecha",
-      "Modelo reto ou curvo",
-      "Proteção para janelas, portas e fachadas",
-      "Sob medida",
-    ],
-  },
-];
+export const PRODUTOS: Produto[] = CATALOGO.map(({ pasta, capa, ...resto }) => {
+  const fotos = galerias[pasta] ?? [];
+  return {
+    ...resto,
+    image: capaDoProduto(pasta, capa, fotos),
+    gallery: fotos,
+  };
+});
 
 export const produtosAtivos = (): Produto[] => PRODUTOS.filter((p) => p.ativo);
 
@@ -308,4 +35,8 @@ export const produtoPorSlug = (slug: string): Produto | undefined =>
 
 export const caminhoProduto = (slug: string): string => `/produtos/${slug}`;
 
-export const PAGINAS_ESTATICAS = ["/", "/sobre", "/produtos", "/contato"] as const;
+/** Capa primeiro, depois o restante da pasta, sem repetir a capa. */
+export const fotosDoProduto = (produto: Produto): string[] => {
+  const demais = produto.gallery.filter((foto) => foto !== produto.image);
+  return produto.image ? [produto.image, ...demais] : demais;
+};

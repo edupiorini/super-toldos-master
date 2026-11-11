@@ -8,7 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { Produto } from "../tipos";
-import { produtoPorSlug, produtosAtivos } from "../dados/produtos";
+import { fotosDoProduto, produtoPorSlug, produtosAtivos } from "../dados/produtos";
 
 const withBase = (src: string) => {
   if (!src.startsWith("/assets/")) return src;
@@ -119,11 +119,7 @@ const Produtos: React.FC<ProdutosProps> = ({
   const navegarImagem = (direcao: "anterior" | "proxima") => {
     if (!produtoSelecionado) return;
 
-    // Array com todas as imagens (principal + galeria)
-    const todasImagens = [
-      produtoSelecionado.image,
-      ...produtoSelecionado.gallery,
-    ];
+    const todasImagens = fotosDoProduto(produtoSelecionado);
     const indiceAtual = todasImagens.indexOf(imagemAtiva);
 
     let novoIndice: number;
@@ -254,15 +250,9 @@ const Produtos: React.FC<ProdutosProps> = ({
 
                 {/* Image Counter */}
                 <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1.5 rounded text-sm font-medium z-10">
-                  {[
-                    produtoSelecionado.image,
-                    ...produtoSelecionado.gallery,
-                  ].indexOf(imagemAtiva) + 1}
+                  {fotosDoProduto(produtoSelecionado).indexOf(imagemAtiva) + 1}
                   /
-                  {
-                    [produtoSelecionado.image, ...produtoSelecionado.gallery]
-                      .length
-                  }
+                  {fotosDoProduto(produtoSelecionado).length}
                 </div>
               </div>
 
@@ -283,7 +273,9 @@ const Produtos: React.FC<ProdutosProps> = ({
                 </button>
 
                 {/* Miniaturas da Galeria */}
-                {produtoSelecionado.gallery.map((img, idx) => (
+                {produtoSelecionado.gallery
+                  .filter((img) => img !== produtoSelecionado.image)
+                  .map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => trocarImagem(img)}
