@@ -48,7 +48,7 @@ const Sobre: React.FC = () => {
              {/* Image Composition */}
              <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl">
                <img
-                 src={encodeURI("/assets/produtos/automatico/1.webp")}
+                 src={encodeURI("/assets/produtos/automatico/toldo automático (2).webp")}
                  alt="Toldo retrátil instalado em residência"
                  loading="lazy"
                  decoding="async"

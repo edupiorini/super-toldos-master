@@ -141,13 +141,11 @@ export const CATALOGO: ItemCatalogo[] = [
     ],
   },
 
-  // Oculto até haver fotos. Para ativar: adicionar as imagens em
-  // public/assets/produtos/capotas/ e mudar ativo para true.
   {
     id: "capotas",
     slug: "capotas-retrateis",
     pasta: "capotas",
-    ativo: false,
+    ativo: true,
     pageTitle: "Capotas Retráteis em Taubaté | Super Toldos",
     metaDescription: "Capotas retráteis que abrem e fecham, nos modelos reta ou curva. Fabricação e instalação em Taubaté, Vale do Paraíba e Litoral Norte. Orçamento grátis no WhatsApp.",
     rotuloInteresse: "Capotas Retráteis",
