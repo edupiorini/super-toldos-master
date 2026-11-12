@@ -238,7 +238,7 @@ const Produtos: React.FC<ProdutosProps> = ({
                     (e.target as HTMLImageElement).style.display = "none";
                     setMiniaturasProntas(true);
                   }}
-                  className="w-full h-full object-contain md:object-cover"
+                  className="w-full h-full object-contain"
                 />
 
                 {/* Setas de Navegação - Visible on mobile, hover on desktop */}
