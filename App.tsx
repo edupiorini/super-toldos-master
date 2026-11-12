@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Menu from './components/Menu';
 import Inicio from './components/Inicio';
 import Produtos from './components/Produtos';
+import Clientes from './components/Clientes';
 import Contato from './components/Contato';
 import Sobre from './components/Sobre';
 import { Instagram, MessageCircle, FileText, Ruler, HardHat, CheckCircle } from 'lucide-react';
@@ -204,6 +205,7 @@ const App: React.FC = () => {
             <Inicio aoNavegar={navegarPara} />
             <SecaoProcesso />
             <Produtos slugAberto={produtoSlug} aoAbrirProduto={abrirProduto} aoFecharProduto={fecharProduto} />
+            <Clientes />
             <Contato />
           </>
         );
