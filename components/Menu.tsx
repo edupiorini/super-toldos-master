@@ -30,6 +30,8 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const headerClaro = estaRolando || menuMobileAberto || paginaAtual !== 'inicio';
+
   return (
     <>
       <nav 
@@ -42,27 +44,30 @@ const Menu: React.FC<MenuProps> = ({ paginaAtual, aoNavegar }) => {
         <div className="max-w-screen-xl mx-auto px-6 md:px-12">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <button onClick={() => lidarComClique('inicio')} className="group relative z-50 flex items-center gap-2 md:gap-2.5 text-left">
+            <button
+              onClick={() => lidarComClique('inicio')}
+              aria-label="Super Toldos - página inicial"
+              className="group relative z-50 flex items-center text-left"
+            >
+              {/* Letras brancas sobre o hero escuro; versão normal no header branco.
+                  As duas ficam no DOM para a troca na rolagem não piscar. */}
               <img
-                src="/logo-supertoldos-mark.svg"
-                alt=""
-                width="48"
-                height="48"
-                className="h-11 w-11 md:h-12 md:w-12"
-                aria-hidden="true"
+                src="/logo-supertoldos-empilhado.webp"
+                alt="Super Toldos"
+                width="320"
+                height="195"
+                className={`h-14 w-auto ${headerClaro ? '' : 'hidden'}`}
+                decoding="async"
               />
-              <div className="flex flex-col leading-none">
-                <span className={`font-display text-2xl font-extrabold uppercase tracking-tight transition-colors ${
-                  estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-black' : 'text-white'
-                }`}>
-                  Super
-                </span>
-                <span className={`font-display text-xl font-bold uppercase tracking-wider transition-colors ${
-                  estaRolando || menuMobileAberto || paginaAtual !== 'inicio' ? 'text-brand-red' : 'text-brand-redLight'
-                }`}>
-                  Toldos
-                </span>
-              </div>
+              <img
+                src="/logo-supertoldos-empilhado-branco.webp"
+                alt={headerClaro ? '' : 'Super Toldos'}
+                aria-hidden={headerClaro || undefined}
+                width="320"
+                height="195"
+                className={`h-14 w-auto ${headerClaro ? 'hidden' : ''}`}
+                decoding="async"
+              />
             </button>
 
             {/* Desktop Nav */}
